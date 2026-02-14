@@ -101,15 +101,15 @@ chronograph/
 
 ## Features Implemented
 
-✅ Repository ingestion with Tree-sitter parsing  
-✅ Neo4j knowledge graph storage  
-✅ E2B sandbox initialization  
-✅ Fault injection (race conditions, memory leaks)  
-✅ LangGraph multi-agent system (Supervisor, Tutor, Debugger)  
-✅ React Flow dependency visualization  
-✅ Monaco code editor  
-✅ Chat interface with scaffolding prompts  
-✅ Time-travel debugging UI  
+- Repository ingestion with Tree-sitter parsing  
+- Neo4j knowledge graph storage  
+- E2B sandbox initialization  
+- Fault injection (race conditions, memory leaks)  
+- LangGraph multi-agent system (Supervisor, Tutor, Debugger)  
+- React Flow dependency visualization  
+- Monaco code editor  
+- Chat interface with scaffolding prompts  
+- Time-travel debugging UI  
 
 ## Next Steps
 
