@@ -3,15 +3,15 @@ import tempfile
 import git
 from pathlib import Path
 import tree_sitter_python as tspython
-from tree_sitter import Language, Parser
+from tree_sitter import Parser
 from services.graph_service import GraphService
-
 
 class IngestionService:
     def __init__(self, graph_service: GraphService):
         self.graph_service = graph_service
-        PY_LANGUAGE = Language(tspython.language())
-        self.parser = Parser(PY_LANGUAGE)
+        # FIX: In tree-sitter v0.25+, we pass the language object directly.
+        # No need for the 'Language()' wrapper which caused your TypeError.
+        self.parser = Parser(tspython.language())
     
     async def clone_repo(self, repo_url: str) -> str:
         """Clone repository to temporary directory"""
