@@ -9,8 +9,8 @@ from services.graph_service import GraphService
 class IngestionService:
     def __init__(self, graph_service: GraphService):
         self.graph_service = graph_service
-        # FIX: In tree-sitter v0.25+, we pass the language object directly.
-        # No need for the 'Language()' wrapper which caused your TypeError.
+        # FIX: In tree-sitter v0.25+, tspython.language() returns the 
+        # language object directly. The 'Language()' wrapper is removed.
         self.parser = Parser(tspython.language())
     
     async def clone_repo(self, repo_url: str) -> str:
