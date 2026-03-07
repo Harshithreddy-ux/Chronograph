@@ -6,40 +6,68 @@ import '@xyflow/react/dist/style.css';
 
 interface DependencyGraphProps {
   sessionId: string;
+  onNodeClick: (nodeData: any) => void;
 }
 
-export default function DependencyGraph({ sessionId }: DependencyGraphProps) {
+export default function DependencyGraph({ sessionId, onNodeClick }: DependencyGraphProps) {
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
 
   useEffect(() => {
     if (!sessionId) return;
 
-    // Mock data for demo
-    const mockNodes = [
-      { id: '1', data: { label: 'main.py' }, position: { x: 100, y: 50 } },
-      { id: '2', data: { label: 'handle_request()' }, position: { x: 100, y: 150 } },
-      { id: '3', data: { label: 'db_save()' }, position: { x: 300, y: 150 } },
-      { id: '4', data: { label: 'process_data()' }, position: { x: 100, y: 250 } },
-      { id: '5', data: { label: 'validate()' }, position: { x: 300, y: 250 } },
-    ];
+    // Fetch real graph data from backend
+    const fetchGraph = async () => {
+      try {
+        const response = await fetch('http://35.172.115.54:8000/api/graph');
+        const data = await response.json();
+        
+        // Convert Neo4j data to React Flow format
+        const flowNodes = data.nodes.map((node: any, idx: number) => ({
+          id: String(node.id),
+          data: { 
+            label: node.name || node.path,
+            fullData: node // Store full node data
+          },
+          position: { x: 100 + (idx % 3) * 200, y: 50 + Math.floor(idx / 3) * 100 },
+          style: {
+            background: node.type === 'Function' ? '#3b82f6' : '#10b981',
+            color: 'white',
+            border: '1px solid #1e293b',
+            borderRadius: '8px',
+            padding: '10px'
+          }
+        }));
+        
+        const flowEdges = data.edges.map((edge: any) => ({
+          id: `e${edge.source}-${edge.target}`,
+          source: String(edge.source),
+          target: String(edge.target),
+          label: edge.type,
+          animated: true
+        }));
+        
+        setNodes(flowNodes);
+        setEdges(flowEdges);
+      } catch (error) {
+        console.error('Graph fetch error:', error);
+      }
+    };
 
-    const mockEdges = [
-      { id: 'e1-2', source: '1', target: '2', label: 'CONTAINS' },
-      { id: 'e2-3', source: '2', target: '3', label: 'CALLS' },
-      { id: 'e2-4', source: '2', target: '4', label: 'CALLS' },
-      { id: 'e4-5', source: '4', target: '5', label: 'CALLS' },
-    ];
-
-    setNodes(mockNodes);
-    setEdges(mockEdges);
+    fetchGraph();
   }, [sessionId]);
+
+  const handleNodeClick = (_event: any, node: Node) => {
+    // Fetch full function details when clicked
+    onNodeClick(node.data.fullData);
+  };
 
   return (
     <div className="h-96 bg-gray-800 rounded-lg border border-gray-700">
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        onNodeClick={handleNodeClick}
         fitView
       >
         <Background />

@@ -11,8 +11,9 @@ class AgentState(TypedDict):
     context: dict
 
 class AgentOrchestrator:
-    def __init__(self, graph_service: GraphService):
+    def __init__(self, graph_service: GraphService, aws_service=None):
         self.graph_service = graph_service
+        self.aws_service = aws_service
         
         # FIX: Swapped OpenAI for Amazon Bedrock
         # This uses the IAM Role permissions we verified earlier.

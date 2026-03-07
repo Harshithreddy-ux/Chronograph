@@ -59,12 +59,13 @@ class GraphService:
     async def get_visualization_data(self):
         """Get nodes and edges for React Flow"""
         with self.driver.session() as session:
-            # Get nodes
+            # Get nodes with all properties
             nodes_result = session.run("""
                 MATCH (n)
                 WHERE n:File OR n:Function
                 RETURN id(n) as id, labels(n)[0] as type, 
-                       n.name as name, n.path as path
+                       n.name as name, n.path as path, n.file_path as file_path,
+                       n.start_line as start_line, n.end_line as end_line
             """)
             nodes = [dict(record) for record in nodes_result]
             
@@ -76,3 +77,16 @@ class GraphService:
             edges = [dict(record) for record in edges_result]
             
             return {"nodes": nodes, "edges": edges}
+    
+    async def get_function_source(self, function_name: str, file_path: str):
+        """Get source code for a specific function"""
+        with self.driver.session() as session:
+            result = session.run("""
+                MATCH (f:Function {name: $name, file_path: $file_path})
+                RETURN f.source as source, f.start_line as start_line, 
+                       f.end_line as end_line
+            """, name=function_name, file_path=file_path)
+            record = result.single()
+            if record:
+                return dict(record)
+            return {"source": "# Function not found", "start_line": 0, "end_line": 0}

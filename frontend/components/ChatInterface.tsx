@@ -17,18 +17,26 @@ export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
     setMessages(prev => [...prev, userMessage]);
     setInput('');
 
-    // Mock tutor response
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    const mockResponses = [
-      "Let's use the Scaffolding approach. First, what do you observe about the handle_request() function?",
-      "Good observation! Now, what programming concept might be relevant when multiple threads access shared resources?",
-      "Exactly! What could you try to ensure thread-safe access to the database?",
-      "Notice that handle_request() calls db_save() without any synchronization. What happens when two threads call this simultaneously?"
-    ];
-    
-    const response = mockResponses[messages.length % mockResponses.length];
-    setMessages(prev => [...prev, { role: 'assistant', content: response }]);
+    try {
+      // Call real backend API
+      const response = await fetch('http://35.172.115.54:8000/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: input,
+          session_id: sessionId
+        })
+      });
+
+      const data = await response.json();
+      setMessages(prev => [...prev, { role: 'assistant', content: data.response }]);
+    } catch (error) {
+      console.error('Chat error:', error);
+      setMessages(prev => [...prev, { 
+        role: 'assistant', 
+        content: 'Error connecting to backend. Make sure the server is running.' 
+      }]);
+    }
   };
 
   return (
