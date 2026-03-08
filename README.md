@@ -1,14 +1,29 @@
-# ChronoGraph - AI-Powered Code Analysis & Visualization 🚀
+# ChronoGraph - AI-Powered Code Analysis & Visualization
 
 Interactive code dependency graph with AI-powered error detection and time-travel debugging.
 
+## How it works
+- Initially user uploads the python file
+- AI analysis is performed for detecting errors and suggesting improvements.
+- Based on the AI report in the previous step A Graph is created to visualize the code
+- Codes Blocks are highlighted based on ai report
+- Red -> Error is present ; Yellow -> suggested improvement.
+- On Selecting a Block user can ask ai at the Bottom right regarding that particualr section of Code
+- "Time Travel Debugger" - Shows the time taken to execute each function and also  flow of the Code
+
+## Current Limitations
+- Upload becomes slow if the current demand for the model used in the code is spiked (FREE TIER LIMITATION).
+- Sometimes blocks in the graph might not be connected properly if current code's flow is improper
+
+
+
 ## Features
 
-- 📊 **Beautiful Dependency Graphs** - Visualize code structure with smooth bezier curves
-- 🤖 **AI Error Detection** - Gemini-powered analysis finds bugs and suggests improvements
-- ⏱️ **Time-Travel Debugger** - Step through execution flow like a movie
-- 💬 **AI Code Tutor** - Chat with AI about your codebase
-- 🎨 **Modern UI** - Gradient backgrounds, animated particles, professional design
+- **Beautiful Dependency Graphs** - Visualize code structure with smooth bezier curves
+- **AI Error Detection** - Gemini-powered analysis finds bugs and suggests improvements
+- **Time-Travel Debugger** - Step through execution flow like a movie
+- **AI Code Tutor** - Chat with AI about your codebase
+- **Modern UI** - Gradient backgrounds, animated particles, professional design
 
 ## Quick Start
 
@@ -43,34 +58,11 @@ docker-compose up -d --build
 - Backend: http://localhost:8000
 - Neo4j: http://localhost:7474
 
-## Deploy to AWS EC2
+## Web Service
+- Currently the project simply uses an E2C instance to make it accessible over the internet
+- It uses Gemini Api for the ai analysis and responses
+- 
 
-See [EC2_MANUAL_SETUP.md](EC2_MANUAL_SETUP.md) for detailed instructions.
-
-### Quick EC2 Deployment:
-
-1. Launch Ubuntu 22.04 EC2 instance (t3.medium)
-2. Open ports: 22, 3000, 8000, 7474, 7687
-3. SSH in and run:
-
-```bash
-# Install Docker
-curl -fsSL https://get.docker.com | sudo sh
-sudo usermod -aG docker ubuntu
-sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-
-# Clone and setup
-git clone https://github.com/Harshithreddy-ux/Chronograph.git
-cd Chronograph
-nano .env  # Add your GEMINI_API_KEY
-nano docker-compose.yml  # Update NEXT_PUBLIC_API_URL with your EC2 IP
-
-# Start
-docker-compose up -d --build
-```
-
-4. Access: `http://YOUR_EC2_IP:3000`
 
 ## Tech Stack
 
