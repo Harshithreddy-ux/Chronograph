@@ -6,7 +6,7 @@ import CodeEditor from '@/components/CodeEditor';
 import ChatInterface from '@/components/ChatInterface';
 import TimelineSlider from '@/components/TimelineSlider';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || (typeof window !== 'undefined' ? `http://${window.location.hostname}:8000` : 'http://localhost:8000');
 
 export default function Home() {
   const [sessionId, setSessionId] = useState<string>('');

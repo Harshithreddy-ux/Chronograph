@@ -9,7 +9,7 @@ interface DependencyGraphProps {
   onNodeClick: (nodeData: any) => void;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || (typeof window !== 'undefined' ? `http://${window.location.hostname}:8000` : 'http://localhost:8000');
 
 export default function DependencyGraph({ sessionId, onNodeClick }: DependencyGraphProps) {
   const [nodes, setNodes] = useState<Node[]>([]);
