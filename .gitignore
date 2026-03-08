@@ -1,4 +1,4 @@
-# Environment variables
+# Environment variables (commented out to allow .env in repo)
 .env
 *.env
 .env.local
