@@ -101,16 +101,7 @@ docker-compose up -d --build
 - t3.medium: ~$30/month
 - With $100 credit: FREE for 3+ months
 
-### Alternative Free Options
-- Railway: $5 credit (1 month free)
-- Vercel + Render: FREE forever
 
-## Documentation
-
-- [EC2 Manual Setup](EC2_MANUAL_SETUP.md)
-- [AWS Deployment Options](DEPLOY_AWS_SIMPLE.md)
-- [Time-Travel Debugger Guide](TIME_TRAVEL_DEBUGGER_EXPLAINED.md)
-- [AI Error Detection](AI_ERROR_DETECTION_UPDATE.md)
 
 ## License
 
