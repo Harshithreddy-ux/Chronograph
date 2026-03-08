@@ -21,8 +21,8 @@ Interactive code dependency graph with AI-powered error detection and time-trave
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/YOUR_USERNAME/chronograph.git
-cd chronograph
+git clone https://github.com/Harshithreddy-ux/Chronograph.git
+cd Chronograph
 ```
 
 2. Create `.env` file:
@@ -61,8 +61,8 @@ sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 
 # Clone and setup
-git clone https://github.com/YOUR_USERNAME/chronograph.git
-cd chronograph
+git clone https://github.com/Harshithreddy-ux/Chronograph.git
+cd Chronograph
 nano .env  # Add your GEMINI_API_KEY
 nano docker-compose.yml  # Update NEXT_PUBLIC_API_URL with your EC2 IP
 
